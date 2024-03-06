@@ -7,7 +7,7 @@ import org.springframework.context.annotation.Bean;
 
 
 @SpringBootApplication
-public class ReservationappApplication {
+public class ReservationappApplication{
 
 	public static void main(String[] args) {
 		SpringApplication.run(ReservationappApplication.class, args);
