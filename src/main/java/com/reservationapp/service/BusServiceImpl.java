@@ -13,6 +13,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class BusServiceImpl implements BusService{
@@ -66,5 +67,23 @@ public class BusServiceImpl implements BusService{
         BusDto savedBusDto = modelMapper.map(savedBus, BusDto.class);
 
         return savedBusDto;
+    }
+
+    @Override
+    public Bus getBusById(long busId) {
+        Bus bus = busRepository.findById(busId).get();
+        return bus;
+    }
+
+    @Override
+    public List<Bus> viewAllBuses() {
+        List<Bus> allBus = busRepository.findAll();
+        return allBus;
+    }
+
+    @Override
+    public List<Bus> getBusesByBusType(String busType) {
+        List<Bus> byBusType = busRepository.findByBusType(busType);
+        return byBusType;
     }
 }

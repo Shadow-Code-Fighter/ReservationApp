@@ -50,6 +50,7 @@ public class Bus {
     private Route route;
 
     // Avoid using @JsonIgnore if serialization of subRoutes is required in certain scenarios
+    @JsonIgnore
     @OneToMany(mappedBy = "bus", cascade = CascadeType.ALL)
     private List<SubRoutes> subRoutes = new ArrayList<>();
 
