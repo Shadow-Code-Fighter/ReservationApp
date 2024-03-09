@@ -25,13 +25,11 @@ public class Route {
     @NotNull(message = "Start point cannot be null !")
     @NotBlank(message = "Start point cannot be blank !")
     @NotEmpty(message = "Start point cannot be empty !")
-    @Column(name = "route_from")
     private String routeFrom;
 
     @NotNull(message = "Destination point cannot be null !")
     @NotBlank(message = "Destination point cannot be blank !")
     @NotEmpty(message = "Destination point cannot be empty !")
-    @Column(name = "route_to")
     private String routeTo;
     private Integer distance;
 

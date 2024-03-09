@@ -13,13 +13,13 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/api/v1/stops")
-public class StopController {
+public class BusStopController {
     @Autowired
     private StopService stopService;
 
     @PostMapping("/add")
-    public ResponseEntity<StopsDto> addStops(@RequestBody StopsDto stopsDto) throws BusDetailsNotFoundException {
-        StopsDto dto = stopService.addStops(stopsDto);
+    public ResponseEntity<StopsDto> addBusStops(@RequestBody StopsDto stopsDto) throws BusDetailsNotFoundException {
+        StopsDto dto = stopService.addBusStops(stopsDto);
         return new ResponseEntity<>(dto, HttpStatus.CREATED);
     }
 }

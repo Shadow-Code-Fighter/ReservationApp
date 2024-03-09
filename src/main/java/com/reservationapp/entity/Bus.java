@@ -3,7 +3,6 @@ package com.reservationapp.entity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -69,7 +68,7 @@ public class Bus {
     // Avoid using @JsonIgnore if serialization of subRoutes is required in certain scenarios
     @JsonIgnore
     @OneToMany(mappedBy = "bus", cascade = CascadeType.ALL)
-    private List<Stops> stop = new ArrayList<>();
+    private List<BusStops> stop = new ArrayList<>();
 
     @OneToOne(mappedBy = "bus",cascade = CascadeType.ALL)
     private Driver driver;

@@ -1,11 +1,7 @@
 package com.reservationapp.paylaod;
 
 import com.reservationapp.entity.Route;
-import com.reservationapp.entity.Stops;
 import lombok.Data;
-
-import java.time.LocalTime;
-import java.util.List;
 
 @Data
 public class BusDto {

@@ -1,11 +1,13 @@
 package com.reservationapp.paylaod;
 
-import jakarta.persistence.Lob;
+import lombok.Data;
 
-public class UserRegistrationDto {
+@Data
+public class UserDto {
     private long id;
     private String name;
     private String email;
+    private String mobile;
     private String password;
     private byte[] profilePicture;
 }

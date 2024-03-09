@@ -6,5 +6,5 @@ import com.reservationapp.paylaod.StopsDto;
 
 public interface StopService {
 
-    public StopsDto addStops(StopsDto stopsDto) throws BusDetailsNotFoundException;
+    public StopsDto addBusStops(StopsDto stopsDto) throws BusDetailsNotFoundException;
 }

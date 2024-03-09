@@ -2,14 +2,11 @@ package com.reservationapp.service;
 
 import com.reservationapp.entity.Bus;
 import com.reservationapp.entity.Route;
-import com.reservationapp.entity.Stops;
-import com.reservationapp.exception.BusDetailsNotFoundException;
-import com.reservationapp.exception.RouteDetailsNotFoundException;
-import com.reservationapp.exception.SubRouteDetailsNotFoundException;
+import com.reservationapp.entity.BusStops;
 import com.reservationapp.paylaod.BusDto;
 import com.reservationapp.repository.BusRepository;
 import com.reservationapp.repository.RouteRepository;
-import com.reservationapp.repository.StopsRepository;
+import com.reservationapp.repository.BusStopsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
@@ -25,7 +22,7 @@ public class BusServiceImpl implements BusService{
     @Autowired
     private RouteRepository routeRepository;
     @Autowired
-    private StopsRepository stopsRepository;
+    private BusStopsRepository busStopsRepository;
 //    @Autowired
 //    private DriverRepository driverRepository;
 
@@ -51,9 +48,9 @@ public class BusServiceImpl implements BusService{
         routeRepository.save(route);
 
         // Save associated SubRoutes entities
-        List<Stops> stop = bus.getStop();
+        List<BusStops> stop = bus.getStop();
         if (stop != null) {
-            for (Stops stopBus : stop) {
+            for (BusStops stopBus : stop) {
                 stopBus.setBus(bus);
             }
         }

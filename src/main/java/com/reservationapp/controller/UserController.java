@@ -21,6 +21,7 @@ public class UserController {
     public ResponseEntity<?> createUser(
         @RequestParam("name") String name,
         @RequestParam("email") String email,
+        @RequestParam("mobile") String mobile,
         @RequestParam("password") String password,
         @RequestParam("profilePicture") MultipartFile profilePicture
     ){
@@ -28,6 +29,7 @@ public class UserController {
           User user = new User();
           user.setName(name);
           user.setEmail(email);
+          user.setMobile(mobile);
           user.setPassword(password);
           user.setProfilePicture(profilePicture.getBytes());
           userService.createUser(user);
