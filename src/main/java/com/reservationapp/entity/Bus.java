@@ -14,8 +14,9 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@ToString
+//@ToString
 public class Bus {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "bus_id")
@@ -38,11 +39,11 @@ public class Bus {
     private String toLocation;
 
     @NotNull(message = "Bus Journey Date can't be null, Please provide correct date")
-    @DateTimeFormat(pattern = "dd HH yyyy")  // Use appropriate data types for date
+    @DateTimeFormat(pattern = "dd-HH-yyyy")  // Use appropriate data types for date
     private String fromDate;
 
     @NotNull(message = "Bus Journey Date can't be null, Please provide correct date")
-    @DateTimeFormat(pattern = "dd HH yyyy")
+    @DateTimeFormat(pattern = "dd-HH-yyyy")
     private String toDate;
 
     @Column(name = "total_duration")
@@ -63,6 +64,7 @@ public class Bus {
 
     // Cascade only specific operations if necessary
     @ManyToOne(cascade = {CascadeType.ALL, CascadeType.MERGE})
+    @JoinColumn(name = "route_id")
     private Route route;
 
     // Avoid using @JsonIgnore if serialization of subRoutes is required in certain scenarios
@@ -70,27 +72,28 @@ public class Bus {
     @OneToMany(mappedBy = "bus", cascade = CascadeType.ALL)
     private List<BusStops> stop = new ArrayList<>();
 
+    @JsonIgnore
     @OneToOne(mappedBy = "bus",cascade = CascadeType.ALL)
     private Driver driver;
 
-//    @Override
-//    public String toString() {
-//        return "Bus{" +
-//                "busId=" + id +
-//                ", busNumber='" + busNumber + '\'' +
-//                ", busType='" + busType + '\'' +
-//                ", fromLocation='" + fromLocation + '\'' +
-//                ", toLocation='" + toLocation + '\'' +
-//                ", fromDate='" + fromDate + '\'' +
-//                ", toDate='" + toDate + '\'' +
-//                ", totalDuration='" + totalDuration + '\'' +
-//                ", fromTime='" + fromTime + '\'' +
-//                ", toTime='" + toTime + '\'' +
-//                ", price=" + price +
-//                ", availableSeats=" + availableSeats +
-//                // Only include subRoutes size to avoid infinite loop
-//                ", subRoutesSize=" + (subRoutes != null ? subRoutes.size() : "null") +
-//                '}';
-//    }
+    @Override
+    public String toString() {
+        return "Bus{" +
+                "busId=" + id +
+                ", busNumber='" + busNumber + '\'' +
+                ", busType='" + busType + '\'' +
+                ", fromLocation='" + fromLocation + '\'' +
+                ", toLocation='" + toLocation + '\'' +
+                ", fromDate='" + fromDate + '\'' +
+                ", toDate='" + toDate + '\'' +
+                ", totalDuration='" + totalDuration + '\'' +
+                ", fromTime='" + fromTime + '\'' +
+                ", toTime='" + toTime + '\'' +
+                ", price=" + price +
+                ", availableSeats=" + availableSeats+
+                // Only include subRoutes size to avoid infinite loop
+//                ", subRoutesSize=" + (stop != null ? stop.size() : "null") +
+                '}';
+    }
 }
 

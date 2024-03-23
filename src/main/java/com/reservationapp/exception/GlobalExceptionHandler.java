@@ -28,4 +28,13 @@ public class GlobalExceptionHandler {
         error.setDetails(w.getDescription(false));
         return new ResponseEntity<>(error,HttpStatus.BAD_REQUEST);
     }
+    @ExceptionHandler(LoginUserException.class)
+    public ResponseEntity<ErrorDetails> loginException(LoginUserException e,WebRequest w){
+        ErrorDetails error = new ErrorDetails();
+        error.setTime(LocalDateTime.now());
+        error.setMessage(e.getMessage());
+        error.setDetails(w.getDescription(false));
+        return new ResponseEntity<>(error,HttpStatus.BAD_REQUEST);
+    }
+
 }

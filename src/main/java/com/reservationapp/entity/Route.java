@@ -8,6 +8,7 @@ import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,9 +32,16 @@ public class Route {
     @NotBlank(message = "Destination point cannot be blank !")
     @NotEmpty(message = "Destination point cannot be empty !")
     private String routeTo;
+
+    @DateTimeFormat(pattern = "dd-HH-yyyy")
+    private String fromDate;
+
+    @DateTimeFormat(pattern = "dd-HH-yyyy")
+    private String toDate;
     private Integer distance;
 
     @JsonIgnore
     @OneToMany(mappedBy = "route",cascade = CascadeType.ALL)
     private List<Bus> busList = new ArrayList<>();
+
 }

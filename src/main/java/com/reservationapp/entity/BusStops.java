@@ -1,5 +1,7 @@
 package com.reservationapp.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
@@ -36,6 +38,17 @@ public class BusStops {
     @Column(name = "departure_time")
     private String departureTime;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @JsonIgnore
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "bus_id")
     private Bus bus;
+
+    @JsonProperty("busNumber")
+    public String getBusNumber() {
+        if (bus != null) {
+            return bus.getBusNumber();
+        }
+        return null;
+    }
+
 }

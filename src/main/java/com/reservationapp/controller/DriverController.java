@@ -13,13 +13,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/api/v1/driver")
+@RequestMapping("/yatra")
 public class DriverController {
 
     @Autowired
     private DriverService driverService;
 
-    @PostMapping("/add")
+//    http://localhost:8080/yatra/driver/add
+    @PostMapping("/driver/add")
     public ResponseEntity<?> addDriver(@RequestBody DriverDto driverDto) throws BusDetailsNotFoundException,DriverDetailsNotFoundException {
         DriverDto driver = driverService.addDriver(driverDto);
         return new ResponseEntity<>(driver, HttpStatus.CREATED);

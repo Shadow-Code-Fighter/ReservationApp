@@ -1,10 +1,9 @@
 package com.reservationapp.paylaod;
 
-import com.reservationapp.entity.Bus;
 import lombok.Data;
 
 @Data
-public class StopsDto {
+public class BusStopsDto {
     private int stopId;
     private String location;
     private String arrivalTime;

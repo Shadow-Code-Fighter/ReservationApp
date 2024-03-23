@@ -7,8 +7,7 @@ import lombok.Data;
 import java.util.List;
 
 @Data
-public class BusDto {
-
+public class StopDto {
     private long busId;
     private String busNumber;
     private String busType;
@@ -21,6 +20,5 @@ public class BusDto {
     private String toTime;
     private double price;
     private int availableSeats;
-    private Route route;
     private List<BusStops> stops;
 }

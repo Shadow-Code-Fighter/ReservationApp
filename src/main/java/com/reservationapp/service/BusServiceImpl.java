@@ -4,14 +4,19 @@ import com.reservationapp.entity.Bus;
 import com.reservationapp.entity.Route;
 import com.reservationapp.entity.BusStops;
 import com.reservationapp.paylaod.BusDto;
+import com.reservationapp.paylaod.SearchListOfBusesDto;
+import com.reservationapp.paylaod.StopDto;
 import com.reservationapp.repository.BusRepository;
 import com.reservationapp.repository.RouteRepository;
 import com.reservationapp.repository.BusStopsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class BusServiceImpl implements BusService{
@@ -23,21 +28,10 @@ public class BusServiceImpl implements BusService{
     private RouteRepository routeRepository;
     @Autowired
     private BusStopsRepository busStopsRepository;
-//    @Autowired
-//    private DriverRepository driverRepository;
 
     @Autowired
     private ModelMapper modelMapper;
-//    @Override
-//    public BusDto addBus(BusDto busDto) {
-//        Bus mapToEntity = modelMapper.map(busDto, Bus.class);
-////        driverRepository.save(busDto.getDriver());
-//        routeRepository.save(busDto.getRoute());
-//        subRoutesRepository.save(busDto.getSubRoutes());
-//        Bus savedBus = busRepository.save(mapToEntity);
-//        BusDto mapToDto = modelMapper.map(savedBus, BusDto.class);
-//        return mapToDto;
-//    }
+
     @Override
     public BusDto addBus(BusDto busDto) {
         // Map BusDto to Bus entity
@@ -65,9 +59,12 @@ public class BusServiceImpl implements BusService{
     }
 
     @Override
-    public Bus getBusById(long busId) {
-        Bus bus = busRepository.findById(busId).get();
-        return bus;
+    public BusDto getBusById(long busId) {
+        Bus bus = busRepository.findById(busId).orElse(null);
+        List<BusStops> allWithBusId = busStopsRepository.findAllWithBusId();
+        BusDto mapToDto = modelMapper.map(bus, BusDto.class);
+        mapToDto.setStops(allWithBusId);
+        return mapToDto;
     }
 
     @Override
@@ -81,4 +78,35 @@ public class BusServiceImpl implements BusService{
         List<Bus> byBusType = busRepository.findByBusType(busType);
         return byBusType;
     }
-}
+
+    @Transactional
+    @Override
+    public void deleteBusByBusId(long busId) {
+        busRepository.deleteById(busId);
+    }
+
+    @Override
+    public void deleteRouteByRouteId(long routeId) {
+        routeRepository.deleteById(routeId);
+    }
+
+    @Override
+    public List<SearchListOfBusesDto> getAllBuses(String routeFrom, String routeTo, String fromDate) {
+        List<Route> routeList = routeRepository.findByRouteFromAndRouteToAndFromDate(routeFrom, routeTo, fromDate);
+//        System.out.println(routeList);
+        List<SearchListOfBusesDto> buses = new ArrayList<>();
+            for (Route route:routeList){
+                Bus bus = busRepository.findById(route.getId()).get();
+                SearchListOfBusesDto searchListOfBusesDto = mapToSearchListOfBusesDto(bus, route);
+                buses.add(searchListOfBusesDto);
+            }
+            return buses;
+        }
+
+        SearchListOfBusesDto mapToSearchListOfBusesDto(Bus bus, Route route){
+            SearchListOfBusesDto searchListOfBusesDto = new SearchListOfBusesDto();
+            modelMapper.map(bus,searchListOfBusesDto);
+            modelMapper.map(route,searchListOfBusesDto);
+            return searchListOfBusesDto;
+        }
+    }
